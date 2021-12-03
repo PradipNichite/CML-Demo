@@ -10,21 +10,12 @@ jobs:
           env:
               REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-
             pip install -r requirements.txt
             python train.py
-
             echo "RUN TASK EXECUTED" > result.txt
             cat result.txt
-
             echo "## RESULT PRODUCED BY RUNNING THE MODEL" > readme.md
             cat metrics.txt >> readme.md
-
-            cml publish feature_importance.png --md >> readme.md
-
-            cml publish residuals.png --md >> readme.md
-            cat readme.md
-
-            
-
-
+            cml-publish feature_importance.png --md >> readme.md
+            cml-publish residuals.png --md >> readme.md
+            cml-send-comment readme.md
